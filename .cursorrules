@@ -1,0 +1,86 @@
+# .cursorrules
+
+[project]
+name = "AI Productivity Scheduler"
+language = "TypeScript"
+framework = "Next.js"
+routing = "App Router"
+styling = "TailwindCSS"
+design_system = "shadcn-ui"
+llm_preference = "Claude-4-Sonnet-MAX"
+
+[files]
+preferred_file_extensions = [".tsx", ".ts"]
+ignore_patterns = ["node_modules", ".next", "dist", "build", ".vercel", ".turbo", "coverage"]
+
+[directory_structure]
+# App routing structure for Next.js
+prioritize = [
+  "app/",
+  "components/",
+  "lib/",
+  "integrations/",
+  "api/",
+  "styles/",
+  "constants/",
+  "types/"
+]
+
+# Important folders to scaffold
+create_if_missing = [
+  "app/chat",
+  "app/dashboard",
+  "components/ui",
+  "components/chat",
+  "components/views",
+  "components/model-select",
+  "integrations/gcal",
+  "integrations/weather",
+  "lib/llm",
+  "lib/utils",
+  "lib/auth",
+  "constants",
+  "types"
+]
+
+[naming_conventions]
+components = "PascalCase"
+files = "kebab-case"
+functions = "camelCase"
+interfaces = "PascalCase"
+env_variables = "UPPER_SNAKE_CASE"
+
+[styling]
+preferred_classes = [
+  "flex", "grid", "rounded-2xl", "shadow-xl", "text-white", "bg-black", "p-4", "gap-4",
+  "max-w-6xl", "border", "dark:bg-zinc-900"
+]
+ui_library = "shadcn-ui"
+
+[llm_integration]
+# For abstracting model use
+llm_entry_point = "lib/llm"
+model_selection_ui = "components/model-select"
+chat_handler = "app/api/chat/route.ts"
+context_sources = ["calendar", "weather", "user-preferences"]
+
+[auth]
+method = "OAuth2"
+provider = "Google"
+scopes = ["https://www.googleapis.com/auth/calendar"]
+
+[extensions]
+formatting = "Prettier"
+linting = "ESLint"
+typechecking = "TypeScript strict mode"
+env = ".env.local"
+
+[deployment]
+platforms = ["Vercel"]
+env_files = [".env.local", ".env"]
+
+[testing]
+enabled = true
+framework = "Vitest or Jest (user choice)"
+folders = ["__tests__", "tests"]
+coverage = true
