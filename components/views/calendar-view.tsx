@@ -261,13 +261,7 @@ export function CalendarView() {
             {todayEvents.length > 0 ? (
               <div className="space-y-2">
                 {todayEvents.map((event) => (
-                  <EventCard
-                    key={event.id}
-                    event={event}
-                    isNewEvent={false}
-                    actionType="none"
-                    compact={true}
-                  />
+                  <EventCard key={event.id} event={event} showDate={false} />
                 ))}
               </div>
             ) : (
@@ -293,13 +287,7 @@ export function CalendarView() {
               </h4>
               <div className="space-y-2 max-h-64 overflow-y-auto">
                 {upcomingEvents.slice(0, 10).map((event) => (
-                  <EventCard
-                    key={event.id}
-                    event={event}
-                    isNewEvent={false}
-                    actionType="none"
-                    compact={true}
-                  />
+                  <EventCard key={event.id} event={event} showDate={false} />
                 ))}
                 {upcomingEvents.length > 10 && (
                   <Card>

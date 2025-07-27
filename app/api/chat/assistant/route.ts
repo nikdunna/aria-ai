@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
       const stream = new ReadableStream({
         start(controller) {
           let streamEnded = false;
-          let currentToolCalls = new Set<string>();
+          const currentToolCalls = new Set<string>();
 
           const safeEnqueue = (data: string) => {
             if (!streamEnded) {

@@ -42,6 +42,12 @@ export default function ChatPage() {
     setActivePanes((panes) => panes.filter((pane) => pane.id !== paneId));
   };
 
+  const handleSidebarToggle = () => {
+    // Placeholder for mobile sidebar toggle functionality
+    // Can be implemented later when mobile sidebar is needed
+    console.log("Sidebar toggle clicked");
+  };
+
   const renderPaneContent = (pane: ActivePane) => {
     switch (pane.type) {
       case "calendar":
@@ -62,7 +68,7 @@ export default function ChatPage() {
   return (
     <div className="h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700">
       <div className="flex flex-col h-full">
-        <Header onViewChange={handlePaneToggle} />
+        <Header onViewChange={handlePaneToggle} onToggleSidebar={handleSidebarToggle} />
         <main className="flex-1 min-h-0 p-2 md:p-4">
           <div className="h-full max-w-full mx-auto">
             <div className="flex gap-2 md:gap-4 h-full">

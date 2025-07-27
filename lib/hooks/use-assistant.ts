@@ -324,7 +324,7 @@ export function useAssistant() {
         }
 
         const decoder = new TextDecoder();
-        let assistantMessage: AssistantMessage = {
+        const assistantMessage: AssistantMessage = {
           id: `assistant-${Date.now()}`,
           role: "assistant",
           content: "",

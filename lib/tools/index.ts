@@ -267,18 +267,15 @@ export const weatherTools: Tool[] = [
 
         if (args.location === "current" || !args.location) {
           // Use user's location from context if available
-          if (context.userContext?.location?.coordinates) {
-            const { lat, lon } = context.userContext.location.coordinates;
+          if (context.userContext?.location?.city) {
             weatherResult = await weatherIntegration.getCurrentWeather(
-              lat,
-              lon
+              context.userContext.location.city
             );
           } else {
-            weatherResult =
-              await weatherIntegration.getUserLocationAndWeather();
+            weatherResult = await weatherIntegration.getCurrentWeather();
           }
         } else {
-          weatherResult = await weatherIntegration.getWeatherByCity(
+          weatherResult = await weatherIntegration.getCurrentWeather(
             args.location
           );
         }

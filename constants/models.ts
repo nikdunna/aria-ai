@@ -2,6 +2,24 @@ import { AIModel } from "@/types";
 
 export const AI_MODELS: AIModel[] = [
   {
+    id: "gpt-4o-mini",
+    name: "GPT-4o Mini",
+    provider: "openai",
+    description:
+      "Fast and efficient model for quick responses and real-time interactions",
+    tooltip:
+      "Speed Demon - Blazing fast responses with excellent quality for daily tasks",
+    maxTokens: 4096,
+    costPer1kTokens: 0.0015,
+    speed: "fast",
+    capabilities: [
+      "reasoning",
+      "planning",
+      "calendar-integration",
+      "real-time",
+    ],
+  },
+  {
     id: "gpt-4-turbo-preview",
     name: "GPT-4 Turbo",
     provider: "openai",
@@ -67,13 +85,13 @@ export const AI_MODELS: AIModel[] = [
   },
 ];
 
-export const DEFAULT_MODEL = "claude-3-sonnet-20240229";
+export const DEFAULT_MODEL = "gpt-4o-mini";
 
 export const MODEL_CATEGORIES = {
-  CREATIVE: ["gpt-4-turbo-preview", "claude-3-sonnet-20240229"],
-  FAST: ["gpt-3.5-turbo", "claude-3-haiku-20240307"],
-  ECONOMICAL: ["gpt-3.5-turbo", "claude-3-haiku-20240307"],
-  PREMIUM: ["gpt-4-turbo-preview", "claude-3-sonnet-20240229"],
+  CREATIVE: ["gpt-4o-mini", "gpt-4-turbo-preview", "claude-3-sonnet-20240229"],
+  FAST: ["gpt-4o-mini", "gpt-3.5-turbo", "claude-3-haiku-20240307"],
+  ECONOMICAL: ["gpt-4o-mini", "gpt-3.5-turbo", "claude-3-haiku-20240307"],
+  PREMIUM: ["gpt-4o-mini", "gpt-4-turbo-preview", "claude-3-sonnet-20240229"],
 };
 
 export const SPEED_LABELS = {

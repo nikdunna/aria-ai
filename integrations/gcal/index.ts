@@ -8,12 +8,6 @@ export class GoogleCalendarIntegration {
       throw new Error("No access token available. Please sign in again.");
     }
 
-    if (session.error === "RefreshAccessTokenError") {
-      throw new Error(
-        "Authentication session expired. Please sign out and sign in again."
-      );
-    }
-
     const oauth2Client = new google.auth.OAuth2(
       process.env.GOOGLE_CLIENT_ID,
       process.env.GOOGLE_CLIENT_SECRET
@@ -216,6 +210,43 @@ export class GoogleCalendarIntegration {
     }
   }
 
+  private async findEventCalendar(
+    session: Session,
+    eventId: string
+  ): Promise<string> {
+    try {
+      const calendar = await this.getCalendarClient(session);
+
+      // First try the Aria Assistant calendar
+      const ariaCalendarId = await this.getOrCreateAriaCalendar(session);
+      try {
+        await calendar.events.get({
+          calendarId: ariaCalendarId,
+          eventId: eventId,
+        });
+        return ariaCalendarId;
+      } catch (error: any) {
+        // Event not found in Aria calendar, try primary
+      }
+
+      // Try primary calendar
+      try {
+        await calendar.events.get({
+          calendarId: "primary",
+          eventId: eventId,
+        });
+        return "primary";
+      } catch (error: any) {
+        // Event not found in primary calendar either
+      }
+
+      throw new Error(`Event ${eventId} not found in any calendar`);
+    } catch (error: any) {
+      console.error("Error finding event calendar:", error);
+      throw new Error("Failed to locate event");
+    }
+  }
+
   private async ensureAriaCalendarExists(session: Session): Promise<string> {
     try {
       const calendar = await this.getCalendarClient(session);
@@ -279,6 +310,9 @@ export class GoogleCalendarIntegration {
     try {
       const calendar = await this.getCalendarClient(session);
 
+      // Find which calendar the event belongs to
+      const calendarId = await this.findEventCalendar(session, eventId);
+
       const updateData: any = {};
       if (eventData.title) updateData.summary = eventData.title;
       if (eventData.description) updateData.description = eventData.description;
@@ -300,7 +334,7 @@ export class GoogleCalendarIntegration {
       }
 
       const response = await calendar.events.update({
-        calendarId: "primary",
+        calendarId: calendarId,
         eventId: eventId,
         requestBody: updateData,
       });
@@ -328,8 +362,11 @@ export class GoogleCalendarIntegration {
     try {
       const calendar = await this.getCalendarClient(session);
 
+      // Find which calendar the event belongs to
+      const calendarId = await this.findEventCalendar(session, eventId);
+
       await calendar.events.delete({
-        calendarId: "primary",
+        calendarId: calendarId,
         eventId: eventId,
       });
     } catch (error: any) {
@@ -442,20 +479,8 @@ export class GoogleCalendarIntegration {
         throw new Error("Failed to create Aria Assistant calendar");
       }
 
-      // Set calendar color to a distinctive color (blue)
-      try {
-        await calendar.calendars.update({
-          calendarId: newCalendar.data.id,
-          requestBody: {
-            summary: "Aria Assistant",
-            description: "Events created by Aria, your AI personal assistant",
-            backgroundColor: "#4285f4", // Google blue
-            foregroundColor: "#ffffff",
-          },
-        });
-      } catch (colorError) {
-        console.warn("Could not set calendar color:", colorError);
-      }
+      // Calendar created successfully without color customization
+      console.log("Calendar created successfully");
 
       console.log(
         "✅ Created new Aria Assistant calendar:",

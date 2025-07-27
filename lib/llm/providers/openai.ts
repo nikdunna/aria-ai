@@ -10,7 +10,11 @@ import { AI_MODELS } from "@/constants";
 
 export class OpenAIProvider implements LLMProvider {
   private client: OpenAI | null = null;
-  private supportedModels = ["gpt-4-turbo-preview", "gpt-3.5-turbo"];
+  private supportedModels = [
+    "gpt-4o-mini",
+    "gpt-4-turbo-preview",
+    "gpt-3.5-turbo",
+  ];
 
   private getClient(): OpenAI {
     if (!this.client) {

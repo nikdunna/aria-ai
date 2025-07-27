@@ -278,9 +278,6 @@ Remember: You're here to make life organization effortless and enjoyable! Use yo
                     },
                   },
                 },
-                {
-                  type: "file_search",
-                },
               ],
             });
 
@@ -352,7 +349,7 @@ EXAMPLES:
 - ALWAYS reference the provided current time context for any time calculations
 
 Remember: You're here to make life organization effortless and enjoyable! Use your tools naturally based on what the user needs, and TRUST the time context provided to you. 🚀`,
-        model: "gpt-4-turbo",
+        model: "gpt-4o-mini",
         tools: [
           {
             type: "function",
@@ -504,9 +501,6 @@ Remember: You're here to make life organization effortless and enjoyable! Use yo
                 required: [],
               },
             },
-          },
-          {
-            type: "file_search",
           },
         ],
       });
@@ -732,7 +726,9 @@ Remember: You're here to make life organization effortless and enjoyable! Use yo
         .on("toolCallCreated", (toolCall) => {
           console.log(
             "🔧 Tool call created:",
-            toolCall.function?.name || toolCall.type
+            toolCall.type === "function"
+              ? toolCall.function.name
+              : toolCall.type
           );
           // Reset pending tool call for this ID
           pendingToolCalls = pendingToolCalls.filter(
@@ -742,7 +738,7 @@ Remember: You're here to make life organization effortless and enjoyable! Use yo
             id: toolCall.id,
             type: toolCall.type,
             function: {
-              name: toolCall.function?.name || "",
+              name: toolCall.type === "function" ? toolCall.function.name : "",
               arguments: "",
             },
           });
@@ -905,7 +901,9 @@ Remember: You're here to make life organization effortless and enjoyable! Use yo
           threadId,
           runId: msg.run_id || undefined,
           metadata: {
-            assistantId: msg.assistant_id || undefined,
+            model: undefined,
+            tokens: undefined,
+            calendarEvents: undefined,
           },
         }))
         .reverse(); // Reverse to get chronological order

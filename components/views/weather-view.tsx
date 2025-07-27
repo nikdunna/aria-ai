@@ -349,49 +349,26 @@ export function WeatherView() {
           </Card>
 
           {/* Additional Details */}
-          {(weather.feelsLike || weather.visibility || weather.pressure) && (
-            <Card>
-              <CardContent className="p-3">
-                <div className="grid grid-cols-3 gap-2 text-center">
-                  {weather.feelsLike && (
-                    <div>
-                      <Thermometer className="w-3.5 h-3.5 mx-auto mb-1 text-muted-foreground" />
-                      <div className="text-xs text-muted-foreground">
-                        Feels like
-                      </div>
-                      <div className="text-sm font-medium">
-                        {weather.feelsLike}°C
-                      </div>
-                    </div>
-                  )}
-                  {weather.visibility && (
-                    <div>
-                      <Eye className="w-3.5 h-3.5 mx-auto mb-1 text-muted-foreground" />
-                      <div className="text-xs text-muted-foreground">
-                        Visibility
-                      </div>
-                      <div className="text-sm font-medium">
-                        {weather.visibility} km
-                      </div>
-                    </div>
-                  )}
-                  {weather.pressure && (
-                    <div>
-                      <div className="w-3.5 h-3.5 mx-auto mb-1 text-muted-foreground flex items-center justify-center">
-                        <div className="w-2 h-2 bg-current rounded-full"></div>
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        Pressure
-                      </div>
-                      <div className="text-sm font-medium">
-                        {weather.pressure} hPa
-                      </div>
-                    </div>
-                  )}
+          <Card>
+            <CardContent className="p-3">
+              <div className="grid grid-cols-2 gap-2 text-center">
+                <div>
+                  <Droplets className="w-3.5 h-3.5 mx-auto mb-1 text-muted-foreground" />
+                  <div className="text-xs text-muted-foreground">Humidity</div>
+                  <div className="text-sm font-medium">{weather.humidity}%</div>
                 </div>
-              </CardContent>
-            </Card>
-          )}
+                <div>
+                  <Wind className="w-3.5 h-3.5 mx-auto mb-1 text-muted-foreground" />
+                  <div className="text-xs text-muted-foreground">
+                    Wind Speed
+                  </div>
+                  <div className="text-sm font-medium">
+                    {weather.windSpeed} km/h
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Weather Smart Scheduling */}
           <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200/50 dark:border-blue-800/50">
