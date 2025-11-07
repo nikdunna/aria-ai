@@ -34,7 +34,7 @@ export function ChatInterface() {
             Please sign in to continue!
           </h2>
           <p className="text-muted-foreground">
-            You need to be authenticated to use the chat.
+            You need to be authenticated to use the chat!
           </p>
         </div>
       </div>
