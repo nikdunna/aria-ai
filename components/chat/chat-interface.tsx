@@ -31,10 +31,10 @@ export function ChatInterface() {
       <div className="flex items-center justify-center h-full">
         <div className="text-center">
           <h2 className="text-lg font-semibold mb-2">
-            Please sign in to continue
+            Please sign in to continue!
           </h2>
           <p className="text-muted-foreground">
-            You need to be authenticated to use the chat.
+            You need to be authenticated to use the chat!
           </p>
         </div>
       </div>
@@ -70,7 +70,7 @@ export function ChatInterface() {
         <ChatInput
           onSendMessage={handleSendMessage}
           disabled={isLoading}
-          placeholder="Ask me to schedule something, or type 'help' for examples..."
+          placeholder="Ask me to schedule something, lil bitch"
         />
       </div>
     </div>
